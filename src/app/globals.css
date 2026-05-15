@@ -1,0 +1,224 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --obsidian: #08080C;
+  --void: #0D0D14;
+  --surface: #12121C;
+  --accent: #C8FF00;
+  --accent-dim: rgba(200,255,0,0.15);
+  --accent-glow: rgba(200,255,0,0.4);
+  --muted: #4A4A5A;
+  --subtle: #2A2A3A;
+  --text: #E8E8F0;
+  --text-dim: #8888A0;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--subtle) var(--obsidian);
+}
+
+html::-webkit-scrollbar {
+  width: 5px;
+}
+html::-webkit-scrollbar-track {
+  background: var(--obsidian);
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--subtle);
+  border-radius: 10px;
+}
+
+body {
+  background: var(--obsidian);
+  color: var(--text);
+  font-family: 'Satoshi', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: 'Clash Display', serif;
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(200,255,0,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+  transform: translate(-50%, -50%);
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #E8E8F0 0%, #C8FF00 50%, #88CCFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Accent gradient text */
+.accent-text {
+  background: linear-gradient(135deg, #C8FF00 0%, #88FF44 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-accent {
+  box-shadow: 0 0 30px rgba(200,255,0,0.3), 0 0 60px rgba(200,255,0,0.1);
+}
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(200,255,0,0.5);
+}
+
+/* Underline hover */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Section pin helper */
+.pin-section {
+  position: relative;
+}
+
+/* Marquee pause on hover */
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* 3D perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Card 3D hover */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+.card-3d:hover {
+  transform: rotateY(3deg) rotateX(-3deg) translateZ(10px);
+}
+
+/* Animated border */
+@keyframes border-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rotating-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.rotating-border::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 60deg, transparent 120deg);
+  animation: border-spin 4s linear infinite;
+  z-index: -1;
+}
+
+.rotating-border::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--surface);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* Stagger animation helper */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Default visible state for animated elements (fallback if GSAP fails) */
+.pricing-card,
+.project-card,
+.process-step,
+.stats-card,
+.service-card,
+.testimonial-item,
+.cta-content,
+.services-heading,
+.clients-heading,
+.pricing-page-hero,
+.projects-hero,
+.project-item,
+.about-hero,
+.value-card,
+.team-card,
+.contact-content,
+.services-hero,
+.service-detail-card,
+.faq-item {
+  opacity: 1;
+  transform: none;
+}
