@@ -163,7 +163,7 @@ export default function HeroSection() {
       </div>
 
       {/* Global CSS Overrides for Structural Styling */}
-      <style jsx global>{`
+       <style jsx global>{`
         .grid-bg {
           background-image: linear-gradient(rgba(200, 255, 0, 0.2) 1px, transparent 1px),
             linear-gradient(90deg, rgba(200, 255, 0, 0.2) 1px, transparent 1px);
