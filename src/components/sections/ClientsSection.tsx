@@ -1,13 +1,26 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import { Zap } from "lucide-react";
 
-const clients = [
-  "Meridian Finance", "Nova Health", "Apex Studio", "Stratos AI",
-  "Clearify", "Bloom Agency", "Taskflow", "NovaTech",
-  "ScaleUp Inc", "Contra", "PerspectiveAI", "ZW Branding",
-  "Velara", "Pinkfly", "Bala Academy", "RecruitPilot",
+// ==========================================
+// CONSTANTS & CONFIGURATIONS
+// ==========================================
+
+const TECHNOLOGIES = [
+  "Next.js", "React.js", "TypeScript", "Python", "GPT & LLMs",
+  "Tailwind CSS", "Node.js", "AWS", "Docker", "Firebase",
+  "MongoDB", "PostgreSQL", "Framer Motion", "GSAP", "Vercel",
+  "Hugging Face", "LangChain", "FastAPI", "Express.js", "Prisma",
+  "Redis", "Kubernetes", "PyTorch", "TensorFlow", "Dart", "Flutter"
 ];
+
+// Animation speed config for a smooth, readable marquee flow
+const MARQUEE_SPEED = "60s";
+
+// ==========================================
+// MAIN CLIENTS/TECH STACK COMPONENT
+// ==========================================
 
 export default function ClientsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -19,12 +32,13 @@ export default function ClientsSection() {
 
     const initGSAP = async () => {
       try {
+        // Dynamically loading GSAP modules to safeguard against SSR hydration issues
         const { default: gsap } = await import("gsap");
         const { ScrollTrigger } = await import("gsap/ScrollTrigger");
         gsap.registerPlugin(ScrollTrigger);
 
         ctx = gsap.context(() => {
-          // .fromTo use karne se opacity ka glitch khatam ho jata hai
+          // Subtle reveal effect on scroll for the section heading
           gsap.fromTo(".clients-heading",
             { y: 30, opacity: 0 },
             {
@@ -35,82 +49,104 @@ export default function ClientsSection() {
               scrollTrigger: {
                 trigger: sectionRef.current,
                 start: "top 85%",
-                toggleActions: "play none none none", // Ensure it plays correctly
+                toggleActions: "play none none none",
               },
             }
           );
         }, sectionRef);
-
       } catch (error) {
         console.error("GSAP initialization failed:", error);
       }
     };
 
     initGSAP();
+
+    // Context cleanup on component unmount
     return () => ctx && ctx.revert();
   }, []);
-
-  const marqueeSpeed = "50s";
 
   return (
     <section
       ref={sectionRef}
-      className={`py-24 relative overflow-hidden border-y border-glass-border transition-opacity duration-500 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}
+      className={`py-20 relative overflow-hidden border-y border-white/5 bg-black transition-opacity duration-500 ${hasMounted ? "opacity-100" : "opacity-0"
+        }`}
     >
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
 
-        {/* Heading Section */}
-        <div className="clients-heading text-center mb-12 opacity-0"> {/* Initial opacity 0 for GSAP */}
-          <div className="inline-flex items-center gap-2 text-xs text-text-dim mb-4">
-            <Zap size={12} className="text-accent" />
-            <span className="text-accent font-medium">Trusted by 100+ businesses worldwide</span>
-            <Zap size={12} className="text-accent" />
+        {/* Section Typography Heading */}
+        <div className="clients-heading text-center mb-12 opacity-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8FF00]/5 border border-[#C8FF00]/20 text-[10px] mb-4 tracking-widest uppercase">
+            <Zap size={10} className="text-[#C8FF00]" />
+            <span className="text-[#C8FF00] font-bold">Cutting-Edge Tech Stack</span>
+            <Zap size={10} className="text-[#C8FF00]" />
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-text">
-            Brands That <span className="text-accent">Trust</span> Us
+          <h2 className="font-bold text-3xl sm:text-5xl text-white tracking-tighter">
+            Technologies We <span className="text-[#C8FF00]">Master</span>
           </h2>
         </div>
 
-        {/* Marquee row 1 */}
+        {/* Marquee Row 01: Forward Scroll Sequence */}
         <div className="relative overflow-hidden mb-4">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-void to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-void to-transparent z-10" />
+          {/* Linear gradient masks for visual fade-out edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent z-10" />
 
           <div
-            className="flex gap-4 animate-marquee w-max"
-            style={{ animationDuration: marqueeSpeed }}
+            className="flex gap-3 animate-marquee w-max"
+            style={{ animationDuration: MARQUEE_SPEED }}
           >
-            {[...clients, ...clients].map((client, i) => (
+            {/* Array duplication feeds a seamless looping sequence */}
+            {[...TECHNOLOGIES, ...TECHNOLOGIES].map((tech, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 px-6 py-3 glass-card rounded-xl text-sm text-text-dim hover:text-text hover:border-white/15 transition-all duration-200 cursor-default whitespace-nowrap"
+                className="flex-shrink-0 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white/40 hover:text-[#C8FF00] hover:border-[#C8FF00]/30 hover:bg-[#C8FF00]/5 transition-all duration-300 cursor-default whitespace-nowrap"
               >
-                {client}
+                {tech}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Marquee row 2 (reverse) */}
+        {/* Marquee Row 02: Reverse Scroll Sequence */}
         <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-void to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-void to-transparent z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent z-10" />
 
           <div
-            className="flex gap-4 animate-marquee-reverse w-max"
-            style={{ animationDuration: marqueeSpeed }}
+            className="flex gap-3 animate-marquee-reverse w-max"
+            style={{ animationDuration: MARQUEE_SPEED }}
           >
-            {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, i) => (
+            {/* Cloned, reversed array layout mapping the loop in opposition */}
+            {[...TECHNOLOGIES.slice().reverse(), ...TECHNOLOGIES.slice().reverse()].map((tech, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 px-6 py-3 glass-card rounded-xl text-sm text-text-dim hover:text-text hover:border-accent/20 hover:text-accent transition-all duration-200 cursor-default whitespace-nowrap"
+                className="flex-shrink-0 px-5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white/40 hover:text-[#C8FF00] hover:border-[#C8FF00]/30 hover:bg-[#C8FF00]/5 transition-all duration-300 cursor-default whitespace-nowrap"
               >
-                {client}
+                {tech}
               </div>
             ))}
           </div>
         </div>
+
       </div>
+
+      {/* Global CSS Injectors for Animation Keyframes */}
+      <style jsx global>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-reverse {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-marquee {
+          animation: marquee linear infinite;
+        }
+        .animate-marquee-reverse {
+          animation: marquee-reverse linear infinite;
+        }
+      `}</style>
     </section>
   );
 }

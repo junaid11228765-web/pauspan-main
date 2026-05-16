@@ -1,9 +1,14 @@
 "use client";
+
 import Image from "next/image";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
-const steps = [
+// ==========================================
+// PROCESS STRATEGY DATA CONFIGURATIONS
+// ==========================================
+
+const PROCESS_STEPS = [
   {
     num: "01",
     title: "Discovery & Strategy",
@@ -50,10 +55,16 @@ const steps = [
   },
 ];
 
+// ==========================================
+// MAIN PROCESS SECTION COMPONENT
+// ==========================================
+
 export default function ProcessSection() {
   return (
     <section className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* Section Typography Intro Wrapper */}
         <div className="text-center max-w-2xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card text-xs text-accent border border-accent/20 mb-6">
             OUR PROCESS
@@ -66,8 +77,9 @@ export default function ProcessSection() {
           </p>
         </div>
 
+        {/* Dynamic Staggered Vertical Stack */}
         <div className="space-y-6">
-          {steps.map(({ num, title, desc, features, tags, images }, i) => (
+          {PROCESS_STEPS.map(({ num, title, desc, features, tags, images }, i) => (
             <motion.div
               key={num}
               initial={{ y: 100, opacity: 0 }}
@@ -78,11 +90,13 @@ export default function ProcessSection() {
               className="group bg-obsidian border border-white/10 hover:border-accent/30 rounded-2xl transition-colors duration-300"
             >
               <div className="rounded-2xl p-2">
+                {/* 3-Column Grid Metric Split */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-                  {/* LEFT: Step info */}
+                  {/* Column 1: Descriptive Metadata & Objectives */}
                   <div className="py-6 px-5 border border-white/10 rounded-xl flex flex-col md:h-[320px]">
-                    {/* Step number + title */}
+
+                    {/* Index Sequence Counter & Title Heading */}
                     <div className="flex items-center gap-3 mb-auto">
                       <span className="font-display font-black text-2xl text-accent/40 leading-none select-none">
                         {num}
@@ -92,7 +106,7 @@ export default function ProcessSection() {
                       </h3>
                     </div>
 
-                    {/* Features */}
+                    {/* Staggered Verification Checkpoints */}
                     <div className="space-y-3 pt-6">
                       {features.map((feature, fi) => (
                         <motion.div
@@ -119,7 +133,7 @@ export default function ProcessSection() {
                       ))}
                     </div>
 
-                    {/* Tags */}
+                    {/* Functional Categorization Tags */}
                     <motion.div
                       className="flex flex-wrap gap-2 pt-5"
                       initial={{ opacity: 0 }}
@@ -138,7 +152,7 @@ export default function ProcessSection() {
                     </motion.div>
                   </div>
 
-                  {/* MIDDLE image */}
+                  {/* Column 2: Core Contextual Imagery Element */}
                   <motion.div
                     className="relative h-48 md:h-[320px] rounded-xl overflow-hidden border border-white/10 group-hover:border-accent/20 transition-colors duration-500"
                     initial={{ scale: 0.85, opacity: 0 }}
@@ -148,14 +162,14 @@ export default function ProcessSection() {
                   >
                     <Image
                       src={images[0]}
-                      alt={`${title} — 1`}
+                      alt={`${title} — Primary Representation`}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </motion.div>
 
-                  {/* RIGHT image */}
+                  {/* Column 3: Secondary Contextual Imagery Element */}
                   <motion.div
                     className="relative h-48 md:h-[320px] rounded-xl overflow-hidden border border-white/10 group-hover:border-accent/20 transition-colors duration-500"
                     initial={{ scale: 0.85, opacity: 0 }}
@@ -165,7 +179,7 @@ export default function ProcessSection() {
                   >
                     <Image
                       src={images[1]}
-                      alt={`${title} — 2`}
+                      alt={`${title} — Auxiliary Representation`}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 33vw"

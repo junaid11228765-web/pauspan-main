@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import "./globals.css";
+// FIX: Agar src/app structure hai toh ye path 100% sahi hai
+import "./globals.css"; 
+
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Pauspan — Premium Service Solutions",
-  description: "Pauspan delivers world-class service solutions that transform businesses. Expert strategy, impeccable execution, extraordinary results.",
+  description: "Pauspan delivers world-class service solutions that transform businesses.",
   keywords: ["pauspan", "services", "consulting", "solutions", "business"],
 };
 
